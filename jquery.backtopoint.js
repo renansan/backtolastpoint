@@ -17,7 +17,7 @@
 	var pluginName = 'backtopoint',
         defaults = {
             justAnchors: false, // Quando "true", o botão só considera a navegação por âncoras "on page"
-            scrollSpeed: 400, // Velocidade do "smooth scroll" pra voltar ao último ponto
+            scrollSpeed: 400 // Velocidade do "smooth scroll" pra voltar ao último ponto
         };
 
     // The actual plugin constructor
@@ -47,21 +47,7 @@
 
 		// Ready
 			// Insere a classe no plugin
-				$(self.element).addClass('backtopoint');
-
-			// Chama aunção principal do plugin
-				// Se o plugin estiver setado para "apenas em âncoras"
-				if (this.settings.justAnchors) {
-					$("a[href*=#]").click(function() {
-						$(document).on("scroll", function() {
-							self.getPoints();
-						});
-					});
-				} else {
-					$(document).on("scroll", function() {
-						self.getPoints();
-					});
-				};
+				$(self.element).addClass('backtopoint').attr('href', 'javascript:void(0)');
 
 			// Gera o Help Data
 				// Se houver uma div com a id x
@@ -69,32 +55,51 @@
 					self.showHelpData();
 				};
 
+		// Scroll
+			// Chama a função principal do plugin
+				// Se o plugin estiver setado para "apenas em âncoras"
+				if (this.settings.justAnchors) {
+					console.log("anchors");
+					
+					$(document).on("scroll", function() {
+						self.position = $(document).scrollTop();
+					});
+					
+					$("a[href*=#]").click(function() {
+						console.log("actual position: " + self.position);
+						self.lastPosition = self.position;
+						console.log("Real Last Position: " + self.lastPosition);
+					});
+
+				} else {
+					console.log("scrolling");
+					$(document).on("scroll", function() {
+						self.lastPosition = self.position;
+						self.position = $(document).scrollTop();
+					});
+				};
+
 		// CLick
 			// Chama a ação principal do plugin
 				// Quando o botão BtP é clicado, a página rola até o ponto anterior
 				$(".backtopoint").click(function(event) {
 					event.preventDefault();
+					event.stopPropagation();
 					self.backtoLastPoint();
 				});
 
 	};
 
 	Plugin.prototype.backtoLastPoint = function () {
-		self = this;
+		var self = this;
 		// Rola a página para a última posição
 		$('html, body').animate({
 			scrollTop: self.lastPosition
 		}, self.settings.scrollSpeed);
 	};
 
-	Plugin.prototype.getPoints = function () {
-		self = this;
-		self.lastPosition = self.position;
-		self.position = $(document).scrollTop();
-	};
-
 	Plugin.prototype.showHelpData = function () {
-		self - this;
+		var self = this;
 		// Gera o HTML que exibe os dados do BtP
 		$html = '<h2>Dados</h2>';
 		$html += '<ul>';
@@ -106,7 +111,7 @@
 		$("div#btp-data").prepend($html);
 
 		// Quando a página é rolada, atualiza a atual e a última posição no arquivo data
-		$(document).on("scroll", function() {
+		$(document,"a[href*=#]").on("ready scroll mouseover mouseup click", function() {
 			$("#btp-data .position .data-value").text(self.position);
 			$("#btp-data .last-position .data-value").text(self.lastPosition);
 		});

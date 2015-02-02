@@ -1,11 +1,11 @@
 /*
- *	jQuery - Back to Point
+ *	Back to Last Point - jQuery Plugin
  *
  *	Copyright (c) Renan San
  *	http://www.github.com/renansan
  *
  *	Plugin website:
- *	http://www.github.com/renansan/backtopoint
+ *	http://www.github.com/renansan/backtolastpoint
  *
  *	Licensed under the MIT license.
  *	http://en.wikipedia.org/wiki/MIT_License
@@ -14,7 +14,7 @@
 ;(function ( $, window, document, undefined ) {
 
 	// Create the defaults once
-	var pluginName = 'backtopoint',
+	var pluginName = 'backToLastPoint',
         defaults = {
             justAnchors: false, // Quando "true", o botão só considera a navegação por âncoras "on page"
             scrollSpeed: 400 // Velocidade do "smooth scroll" pra voltar ao último ponto
@@ -47,11 +47,11 @@
 
 		// Ready
 			// Insere a classe no plugin
-				$(self.element).addClass('backtopoint').attr('href', 'javascript:void(0)');
+				$(self.element).addClass('backtolastpoint').attr('href', 'javascript:void(0)');
 
 			// Gera o Help Data
 				// Se houver uma div com a id x
-				if ($("#btp-data").length > 0) {
+				if ($("#btlp-data").length > 0) {
 					self.showHelpData();
 				};
 
@@ -59,7 +59,6 @@
 			// Chama a função principal do plugin
 				// Se o plugin estiver setado para "apenas em âncoras"
 				if (this.settings.justAnchors) {
-					console.log("anchors");
 					
 					$(document).on("scroll", function() {
 						self.position = $(document).scrollTop();
@@ -72,7 +71,6 @@
 					});
 
 				} else {
-					console.log("scrolling");
 					$(document).on("scroll", function() {
 						self.lastPosition = self.position;
 						self.position = $(document).scrollTop();
@@ -81,8 +79,8 @@
 
 		// CLick
 			// Chama a ação principal do plugin
-				// Quando o botão BtP é clicado, a página rola até o ponto anterior
-				$(".backtopoint").click(function(event) {
+				// Quando o botão btlp é clicado, a página rola até o ponto anterior
+				$(".backtolastpoint").click(function(event) {
 					event.preventDefault();
 					event.stopPropagation();
 					self.backtoLastPoint();
@@ -100,20 +98,20 @@
 
 	Plugin.prototype.showHelpData = function () {
 		var self = this;
-		// Gera o HTML que exibe os dados do BtP
+		// Gera o HTML que exibe os dados do btlp
 		$html = '<h2>Dados</h2>';
 		$html += '<ul>';
-		$html += '<li class="position">Posição atual: <span class="data-value"></span></li>';
-		$html += '<li class="last-position">Última posição: <span class="data-value"></span></li>';
+		$html += '<li class="btlp-position">Posição atual: <span class="btlp-data-value"></span></li>';
+		$html += '<li class="btlp-last-position">Última posição: <span class="btlp-data-value"></span></li>';
 		$html += '</ul>';
 
 		// Insere o HTML gerado na div x
-		$("div#btp-data").prepend($html);
+		$("#btlp-data").prepend($html);
 
 		// Quando a página é rolada, atualiza a atual e a última posição no arquivo data
 		$(document,"a[href*=#]").on("ready scroll mouseover mouseup click", function() {
-			$("#btp-data .position .data-value").text(self.position);
-			$("#btp-data .last-position .data-value").text(self.lastPosition);
+			$("#btlp-data .btlp-position .btlp-data-value").text(self.position);
+			$("#btlp-data .btlp-last-position .btlp-data-value").text(self.lastPosition);
 		});
 	};
 

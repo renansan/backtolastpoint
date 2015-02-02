@@ -17,7 +17,7 @@
 	var pluginName = 'backToLastPoint',
         defaults = {
             justAnchors: false, // Quando "true", o botão só considera a navegação por âncoras "on page"
-            scrollSpeed: 400 // Velocidade do "smooth scroll" pra voltar ao último ponto
+            scrollDuration: 400 // Velocidade do "smooth scroll" pra voltar ao último ponto
         };
 
     // The actual plugin constructor
@@ -93,7 +93,7 @@
 		// Rola a página para a última posição
 		$('html, body').animate({
 			scrollTop: self.lastPosition
-		}, self.settings.scrollSpeed);
+		}, self.settings.scrollDuration);
 	};
 
 	Plugin.prototype.showHelpData = function () {

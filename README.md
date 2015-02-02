@@ -9,12 +9,12 @@ This plugin get the position just before this click, so allows you to go back to
 
 It can be useful, so!
 
-## How to use
+## Usage
 
 To get back you need a "Get Back to Last Point" button. For it:
 
 ````
-$(".your-link").backToLastPoint({
+$(".get-back").backToLastPoint({
 	justAnchors: true
 });
 ````
@@ -22,6 +22,14 @@ $(".your-link").backToLastPoint({
 The plugin will automatically recognize when an internal links is clicked, so, just click on "Get Back" button to go back to the last position!
 
 The generated output have no styles.
+
+You can change the scroll duration (default is 400 ms):
+````
+$(".get-back").backToLastPoint({
+	justAnchors: true,
+	scrollDuration: 400
+});
+````
 
 ## Contributing
 

@@ -11,7 +11,7 @@ It can be useful, so!
 
 ## Usage
 
-To get back you need a "Get Back to Last Point" button. For it:
+To 'get back' you need a "Get Back to Last Point" button. For it:
 
 ````
 $(".get-back").backToLastPoint({
@@ -19,7 +19,7 @@ $(".get-back").backToLastPoint({
 });
 ````
 
-The plugin will automatically recognize when an internal links is clicked, so, just click on "Get Back" button to go back to the last position!
+The plugin will automatically recognize when an internal link is clicked, so, just click on "Get Back" button to go back to the last position!
 
 The generated output have no styles.
 
